@@ -1,31 +1,58 @@
 
 
-let goBack = document.getElementById('goBack').addEventListener("click", function(){window.location.href = "index.html"})
+let goBack = document.getElementById('goBack').addEventListener("click", function(){window.history.back()})
 
 
+ let currentExperience = 0
+document.addEventListener('DOMContentLoaded', function() {
+    currentExperience = document.getElementById("experienceIdentifierID").innerHTML
+    matchStills()
+    
 
-
-
-
+});
 
 
 
 // ----------------------------------------------------- Handling Image
-
+const focalImage = document.getElementById('focalImage')
 function changeImage(){
-    const focalImage = document.getElementById('focalImage')
-    // sourceLink = focalImage.src;
-    // mmLocation = sourceLink.indexOf("mm")
-    // fileFocalLength = ((sourceLink.slice(mmLocation - 3, mmLocation)).replace(/\D/g, '')) + "mm.png"
-    // focalImage.src = "images/" + fileFocalLength
-    focalImage.src = "images/" + standardLength + "mm.png"
+    focalImage.src = "images/" +  currentExperience + "/" + standardLength + "mm.jpg"
 
-    
+
+
+    let info  = document.getElementById("smallTextID")
+
+    if (output.innerHTML.replace(/[^0-9]/g, '') == "10"){
+        info.innerHTML = 'A very wide focal length, typically reserved for more abstract or creative shots. This focal length can be used to portray a sort of "bizarreness" or “otherwordly” like appearance due to its heavy distortion. Scenes where the subject is going insane or in a false reality is where lenses around this focal length really shine.'
+    } else if (output.innerHTML.replace(/[^0-9]/g, '') == "16"){
+        info.innerHTML = 'A wider focal length than typically used, but still very useful for specific kinds of shots. Wide enough to capture lots of detail, this focal length is often used for environmental shots where giving context to the scene is necessary. It can also be used to give a sense of scale or overwhelming presence as its wide field of view captures a lot of a scene.'
+    } else if (output.innerHTML.replace(/[^0-9]/g, '') == "24"){
+        info.innerHTML = 'A very solid focal length with good versatility. This focal length provides a good amount of field of view without much distortion. Since this length leans slightly towards the wider end, it can be used to film room scenes where there is still ample space but contained within 4 walls.'
+    } else if (output.innerHTML.replace(/[^0-9]/g, '') == "50"){
+        info.innerHTML = 'Although leaning towards the telephoto end more, this focal length offers good versatility. It isn’t so tight where the background appears flat but creates enough subject separation to where the subject can really stand out from a scene. Due to such, this focal length is typically utilized to emphasize the subject without eliminating too much visual information'
+    } else if (output.innerHTML.replace(/[^0-9]/g, '') == "75"){ 
+        info.innerHTML = 'A tighter focal length that offers a lot of subject separation. These lenses are more on the telephoto end where the background will appear closer to the subject than normal. A good lens choice for creating intimacy as it compresses the scene quite a bit without totally eliminating background information. In these focal ranges, the shots can appear almost “stalker-ish"'
+    } else if (output.innerHTML.replace(/[^0-9]/g, '') == "100"){
+        info.innerHTML = 'A very tight focal length that will offer lots of subject separation. Shots from this focal length will give off a “distant” feel and any subject closer to the camera will appear as if they are standing in front of a backdrop. The compressed feeling of the shot can be very useful for creating intimacy however, should be used sparingly if giving context to a scene is necessary.'
+}
 }
 
-// ----------------------------------------------------- Handling Focal Value
 
-const focalLengths = [5, 16, 24, 50, 75, 100]
+
+let imageLoaded = false
+function fetchStills(a){
+    if (a == true){
+        imageLoaded = true
+    } 
+}
+
+
+// ----------------------------------------------------- Handling Image
+
+
+
+
+const focalLengths = [10, 16, 24, 50, 75, 100]
 let currentFocalLength = 0
 let standardLength = 1
 let lesser = 0
@@ -33,10 +60,8 @@ let greater = 1
 let minYear = 1900
 let maxYear = 2025
 let yearsList = [minYear]
+
 const yearsLength = yearsList.length;
-
-
-
 
 
 
@@ -78,21 +103,33 @@ function FocalLength(){
 let slider = document.getElementById("myRange");
 
 let output = document.getElementById("focalLength");
+let output2 = document.getElementById("focalLength2")
 
+
+
+let info = document.getElementById("focalContainerID")
 
 slider.addEventListener("input", function() {
     const value = this.value
     output.innerHTML = nearestStandardLength(value) + " mm"
+    output2.innerHTML = nearestStandardLength(value) + " mm"
+
+    focalImage.style.display = "flex"
     changeImage()
-    matchStills()
+    hideElse()
     document.getElementById("initialTextID").classList.add("dissappear")
+
+    if(info.style.pointerEvents = "none"){
+        console.log('autoed')
+        info.style.pointerEvents = "auto"
+    }
 })
 
 // ----------------------------------------------------- Handling Stills
 
 const maxSceneCount = 6
-let filmList = [
-    "The Monkey",
+let filmList = {
+    "Title" : ["The Monkey",
     "Oppenheimer",
     "My Beautiful Laundrette",
     "Fallen Angels",
@@ -115,7 +152,167 @@ let filmList = [
     "Ringu",
     "Thirst",
     "Ghost in the Shell",
-]
+    "The Headless Woman",
+    "Bright Star",
+    "Fire In The Sky",
+    "The Voices",
+    "The Eyes of Tammy Faye",
+    "Brightburn",
+    "Full River Red",
+    "Hero",
+    "The Mimic",
+    "The Menu",
+    "Honeydripper",
+    "White Bird in a Blizzard",
+    "A Clockwork Orange",
+    "Patton",
+    "Forrest Gump",
+    "Brazil",
+    "Bushwick",
+    "6 Underground",
+    "In The Heart of the Sea",
+    "Swing Kids",
+    "Christopher Robin",
+    "Dance With Wolves",
+    "Daybreakers",
+    "Doomsday",
+    "Logan",
+    "Cobweb",
+    "Domino",
+    "War for the Planet of the Apes",
+    "Bus Stop",
+    "Macbeth"
+
+
+
+    ],
+    "Year" : [
+    "2025", 
+    "1985", 
+    "2023", 
+    "1995", 
+    "2022", 
+    "1970", 
+    "1965", 
+    "1957", 
+    "2017", 
+    "2008", 
+    "2018", 
+    "2003", 
+    "2009", 
+    "1994", 
+    "1997", 
+    "2015", 
+    "2016", 
+    "2016", 
+    "2019",
+    "2017",
+    "1998",
+    "2009",
+    "2017",
+    "2008",
+    "2009",
+    "1993",
+    "2014",
+    "2021",
+    "2019",
+    "2023",
+    "2002",
+    "2017",
+    "2022",
+    "2007",
+    "2014",
+    "1971",
+    "1970",
+    "1994",
+    "1985",
+    "2017",
+    "2019",
+    "2014",
+    "2018",
+    "2018",
+    "1990",
+    "2009",
+    "2008",
+    "2017",
+    "2023",
+    "2005",
+    "2017",
+    "1956",
+    "2015"
+
+
+
+
+    ],
+    "DP":[
+    "Nico Aguilar",
+    "Oliver Stapleton",
+    "Hoyte Van Hoytema",
+    "Christopher Doyle",
+    "Kjell Lagerroos",
+    "Antonio Rinaldi",
+    "Asakazu Nakai , Takao Saitô",
+    "Ingmar Bergman",
+    "Matthew Libatique",
+    "Benoît Debie",
+    "Hyung Koo Kim",
+    "Maxime Alexandre",
+    "Yves Cape",
+    "Haskell Wexler",
+    "Michael Marshall",
+    "Sam Levy",
+    "Seamus McGarvey",
+    "Jas Shelton",
+    "Michael Dallatorre",
+    "Ben Nott",
+    "Jun’ichirô Hayashi",
+    "Chung-hoon Chung",
+    "Jess Hall",
+    "Barbara Alvarez",
+    "Greig Fraser",
+    "Bill Pope",
+    "Udo Kramer",
+    "Mike Gioulakis",
+    "Michael Dallatorre",
+    "Xiaoding Zhao",
+    "Christopher Doyle",
+    "Kim Il-yeon",
+    "Peter Deming",
+    "Dick Pope" ,
+    "Sandra Valde-Hansen",
+    "Stanley Kubrick",
+    "Fred J. Koenekamp",
+    "Don Burgess",
+    "Roger Pratt",
+    "Jonathan Milott & Cary Murnion",
+    "Bojan Bazelli",
+    "Anthony Dod Mantle",
+    "Kim Ji-yong",
+    "Matthias Koenigswieser",
+    "Dean Semler",
+    "Ben Nott",
+    "Neil Marshall",
+    "John Mathieson",
+    "Samuel Bodin",
+    "Dan Mindel",
+    "Michael Seresin",
+    "Milton R. Krasner",
+    "Justin Kurzel",
+
+
+
+
+
+
+
+
+
+
+    
+    ]
+}
+
 
 
 
@@ -138,113 +335,217 @@ function deleteEmpty(){
 
 function matchStills(){
     const column1 = document.getElementById('stillListID1');
-    const column2 = document.getElementById('stillListID2');
-    const column3 = document.getElementById('stillListID3');
-    const column4 = document.getElementById('stillListID4');
-
-
-
-
 
     column1.innerHTML = ''
-    column2.innerHTML = ''
-    column3.innerHTML = ''
-    column4.innerHTML = ''  
 
-
-
-for (let i = 0; i < filmList.length; i ++){
-    let targetMovie = filmList[i]
+for (let i = 0; i < filmList.Title.length; i ++){
+    let targetMovie = filmList.Title[i]
     let imagePath = ''
-    let folderPath = output.innerHTML.replace(/[^0-9]/g, '');
 
-    for ( let o = 1; o < maxSceneCount; o ++){
-    imagePath = "images/" + folderPath +"/" + targetMovie + o + '.jpg'
-
-
-    const container = document.createElement('li')
-    const topBar = document.createElement('div')
-    const bottomBar = document.createElement('div')
-    const leftText = document.createElement('div')
-    const rightText = document.createElement('div')
-    const img = document.createElement('img')
-
-    const revealedText = document.createElement('ul')    
+    for (let p = 0; p < focalLengths.length; p ++){
+        for ( let o = 1; o < maxSceneCount; o ++){
+        imagePath = "images/" + focalLengths[p] + "/" + targetMovie + o + '.jpg'
 
 
-    const title = document.createElement('p')
-    const year = document.createElement('p')
-    const director = document.createElement('p')
-    const dp = document.createElement('p')
-    const genre = document.createElement('p')
+        const container = document.createElement('li')
+        const topBar = document.createElement('div')
+        const bottomBar = document.createElement('div')
+        const stillDetail = document.createElement('div')
+        const img = document.createElement('img')
+         
+        const leftText = document.createElement('div') 
+        const stillInfo1 = document.createElement('ul') 
+
+        const breaker1 = document.createElement('li')
+        const title = document.createElement('li')
+        const breaker2 = document.createElement('li')
+        const year = document.createElement('li')
+        const breaker3 = document.createElement('li')
+        const director = document.createElement('li')
+        const dp = document.createElement('li')
+
+        const rightText = document.createElement('div') 
+        const stillInfo2 = document.createElement('ul') 
+
+        const breaker4 = document.createElement('li')
+        const titleRight = document.createElement('li')
+        const breaker5 = document.createElement('li')
+        const yearRight = document.createElement('li')
+        const breaker6 = document.createElement('li')
+        const directorRight = document.createElement('li')
+        const dpRight = document.createElement('li')
 
 
+  
+
+        
+        container.classList.add("stillContainer")
+        container.classList.add(focalLengths[p] + "mm")
 
 
+        topBar.classList.add("stillTopBar")
+        bottomBar.classList.add("stillBottomBar")
 
+        leftText.classList.add("leftText")
+        rightText.classList.add("rightText")
+
+        stillInfo1.classList.add("stillInfo")
+        stillInfo2.classList.add("stillInfo")
+
+        breaker1.classList.add("stillInfoDetail")
+        breaker2.classList.add("stillInfoDetail")
+        breaker3.classList.add("stillInfoDetail")
     
-    container.classList.add("stillContainer")
-    topBar.classList.add("stillTopBar")
-    bottomBar.classList.add("stillBottomBar")
-    leftText.classList.add("leftText")
-    rightText.classList.add("rightText")
-    img.classList.add("stillImage")
-    revealedText.classList.add("revealedText")
-
-    
-    // filmClass = targetMovie.replace(/\s/g, "");
-    // container.classList.add(filmClass)
-
-
-    leftText.innerHTML = targetMovie
-    rightText.innerHTML = "year"
-    title.innerHTML = '"Underworks"'
-    year.innerHTML = "Underworks"
-    director.innerHTML = "Underworks"
-    dp.innerHTML = "Underworks"
-    genre.innerHTML = "Underworks"
-
-    img.src = imagePath
-
-
-    
-    if (img.complete && img.naturalWidth !== 0){
-
-    
-
-
-    container.appendChild(topBar);
-    container.appendChild(img);   
-    container.appendChild(bottomBar);  
-    topBar.appendChild(leftText);        
-    topBar.appendChild(rightText);  
-    topBar.appendChild(revealedText);  
-
-    revealedText.appendChild(title);  
-    revealedText.appendChild(year);  
-    revealedText.appendChild(director);  
-    revealedText.appendChild(dp);  
-    revealedText.appendChild(genre);  
-    
-    const columnList = [column1, column2, column3, column4]
-    let counts = [
-        column1.children.length,
-        column2.children.length,
-        column3.children.length,
-        column4.children.length
-    ]
+        breaker4.classList.add("stillInfoDetail")
+        breaker5.classList.add("stillInfoDetail")
+        breaker6.classList.add("stillInfoDetail")
 
 
 
-    let min = counts.indexOf(Math.min(...counts))
-    columnList[min].appendChild(container)
 
+        stillDetail.classList.add("stillDetail")
+        img.classList.add("stillImage")
+
+
+        title.classList.add("stillTitle")
+            
+
+        title.innerHTML = targetMovie
+        year.innerHTML = filmList.Year[i]
+        director.innerHTML = "Underworks"
+        dp.innerHTML = filmList.DP[i]
+
+        titleRight.innerHTML = "Title"
+        yearRight.innerHTML = "Year"
+        directorRight.innerHTML = "Director"
+        dpRight.innerHTML = "Cinematographer"
+
+
+
+        img.src = imagePath
+
+        img.addEventListener("click", function(){fullImgPreview(img.src)})
+
+        img.onerror = function() {
+            if (container.parentNode) {
+                container.parentNode.removeChild(container);
+            }
+        };
+
+        
+
+        container.appendChild(topBar);
+        container.appendChild(stillDetail); 
+        container.appendChild(img);   
+        container.appendChild(bottomBar);  
+        
+        topBar.appendChild(leftText);        
+        topBar.appendChild(rightText);
+        
+        leftText.appendChild(stillInfo1);  
+        stillInfo1.appendChild(title);  
+        stillInfo1.appendChild(breaker1);  
+        stillInfo1.appendChild(year);  
+        stillInfo1.appendChild(breaker2);  
+        stillInfo1.appendChild(director);  
+        stillInfo1.appendChild(breaker3);  
+        stillInfo1.appendChild(dp);  
+
+        rightText.appendChild(stillInfo2);  
+        stillInfo2.appendChild(titleRight);  
+        stillInfo2.appendChild(breaker4);  
+        stillInfo2.appendChild(yearRight);  
+        stillInfo2.appendChild(breaker5);  
+        stillInfo2.appendChild(directorRight);  
+        stillInfo2.appendChild(breaker6);  
+        stillInfo2.appendChild(dpRight);  
+
+        column1.appendChild(container)
+
+        
+        }
     }
-    }
-
 
 } 
 
 
 }
+
+
+
+function fullImgPreview(a){
+
+    document.getElementById("fullImgViewContainerID").style.display = "flex"
+    document.getElementById("siteShadowID").style.display = "flex"
+    document.getElementById("fullImgViewID").src = a
+}
+
+document.getElementById("siteShadowID").addEventListener("click", function(){
+    document.getElementById("fullImgViewContainerID").style.display = "none"
+    document.getElementById("siteShadowID").style.display = "none"
+    
+
+})
+
+function hideElse(){
+    let excludeList = []
+    for (let i = 0; i < focalLengths.length; i ++){
+    if (focalLengths[i] != output.innerHTML.replace(/[^0-9]/g, '')){
+
+        let excludeThese = document.getElementsByClassName(focalLengths[i] + "mm")
+        for (let p = 0; p < excludeThese.length; p++){
+            excludeThese[p].style.display = "none"
+        }
+       
+        excludeList.push(focalLengths[i])
+
+
+
+
+
+    } else {
+    let includeThese = document.getElementsByClassName(output.innerHTML.replace(/[^0-9]/g, '') + "mm")
+        for (let p = 0; p < includeThese.length; p++){
+            includeThese[p].style.display = "block "
+        }
+    
+    }
+} 
+
+
+}
+
+
+
+// ----------------------------------------------------- Handling Filters
+ 
+
+// ---------Year
+let yearDropdown = document.getElementById("yearDropdownID")
+
+
+// ----------------------------------------------------- Handling Search Bar
+function filterFilms(qualifier) {
+    let filtered = {
+        Title: [],
+        Year: [],
+        DP: []
+    };
+
+    for (let i = 0; i < filmList.Title.length; i++) {
+        if (filmList.Title[i].toLowerCase().includes(qualifier.toLowerCase())) {
+            filtered.Title.push(filmList.Title[i]);
+        }
+        if (filmList.Year[i].includes(qualifier)) {
+            filtered.Year.push(filmList.Year[i]);
+        }
+        if (filmList.DP[i].toLowerCase().includes(qualifier.toLowerCase())) {
+            filtered.DP.push(filmList.DP[i]);
+        }
+    }
+
+    
+}
+
+filterFilms("yves ")
 
