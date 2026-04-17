@@ -469,7 +469,7 @@ margin-bottom: 30px;
 
 
 .experiencesContainer1{
-    background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/24mm.jpg');
+    background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/10mm.jpg');
     background-size: cover;
     background-position: center;
     background-color:var(--primary_color);
@@ -1338,7 +1338,5 @@ display: none;
     width: 290px
 }
 
-.lineDetail{
 
-}
 }
