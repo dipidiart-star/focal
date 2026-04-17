@@ -468,12 +468,7 @@ margin-bottom: 30px;
 
 
 
-.experiencesContainer1{
-        background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/24mm.jpg');
-    background-position: center;
-    background-size: cover;
-    background-color:var(--primary_color);
-}
+
 
 
 
@@ -496,7 +491,12 @@ margin-bottom: 30px;
 
 
 
-
+.experiencesContainer1{
+    background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/24mm.jpg');
+    background-position: center;
+    background-size: cover;
+    background-color:var(--primary_color);
+}
 
 
 
