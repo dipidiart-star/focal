@@ -333,142 +333,140 @@ function deleteEmpty(){
 }
 
 
-function matchStills(){
+function matchStills() {
     const column1 = document.getElementById('stillListID1');
+    column1.innerHTML = '';
 
-    column1.innerHTML = ''
+    const batchSize = 10;
+    const delay = 100;
+    let index = 0;
 
-for (let i = 0; i < filmList.Title.length; i ++){
-    let targetMovie = filmList.Title[i]
-    let imagePath = ''
+    function processBatch() {
+        const end = Math.min(index + batchSize, filmList.Title.length);
 
-    for (let p = 0; p < focalLengths.length; p ++){
-        for ( let o = 1; o < maxSceneCount; o ++){
-        imagePath = "images/" + focalLengths[p] + "/" + targetMovie + o + '.jpg'
+        for (let i = index; i < end; i++) {
+            let targetMovie = filmList.Title[i];
+            let imagePath = '';
 
+            for (let p = 0; p < focalLengths.length; p++) {
+                for (let o = 1; o < maxSceneCount; o++) {
+                    imagePath = "images/" + focalLengths[p] + "/" + targetMovie + o + '.jpg';
 
-        const container = document.createElement('li')
-        const topBar = document.createElement('div')
-        const bottomBar = document.createElement('div')
-        const stillDetail = document.createElement('div')
-        const img = document.createElement('img')
-         
-        const leftText = document.createElement('div') 
-        const stillInfo1 = document.createElement('ul') 
+                    const container = document.createElement('li');
+                    const topBar = document.createElement('div');
+                    const bottomBar = document.createElement('div');
+                    const stillDetail = document.createElement('div');
+                    const img = document.createElement('img');
 
-        const breaker1 = document.createElement('li')
-        const title = document.createElement('li')
-        const breaker2 = document.createElement('li')
-        const year = document.createElement('li')
-        const breaker3 = document.createElement('li')
-        const director = document.createElement('li')
-        const dp = document.createElement('li')
+                    const leftText = document.createElement('div');
+                    const stillInfo1 = document.createElement('ul');
 
-        const rightText = document.createElement('div') 
-        const stillInfo2 = document.createElement('ul') 
+                    const breaker1 = document.createElement('li');
+                    const title = document.createElement('li');
+                    const breaker2 = document.createElement('li');
+                    const year = document.createElement('li');
+                    const breaker3 = document.createElement('li');
+                    const director = document.createElement('li');
+                    const dp = document.createElement('li');
 
-        const breaker4 = document.createElement('li')
-        const titleRight = document.createElement('li')
-        const breaker5 = document.createElement('li')
-        const yearRight = document.createElement('li')
-        const breaker6 = document.createElement('li')
-        const directorRight = document.createElement('li')
-        const dpRight = document.createElement('li')
+                    const rightText = document.createElement('div');
+                    const stillInfo2 = document.createElement('ul');
 
+                    const breaker4 = document.createElement('li');
+                    const titleRight = document.createElement('li');
+                    const breaker5 = document.createElement('li');
+                    const yearRight = document.createElement('li');
+                    const breaker6 = document.createElement('li');
+                    const directorRight = document.createElement('li');
+                    const dpRight = document.createElement('li');
 
-  
+                    container.classList.add("stillContainer");
+                    container.classList.add(focalLengths[p] + "mm");
 
-        
-        container.classList.add("stillContainer")
-        container.classList.add(focalLengths[p] + "mm")
+                    topBar.classList.add("stillTopBar");
+                    bottomBar.classList.add("stillBottomBar");
 
+                    leftText.classList.add("leftText");
+                    rightText.classList.add("rightText");
 
-        topBar.classList.add("stillTopBar")
-        bottomBar.classList.add("stillBottomBar")
+                    stillInfo1.classList.add("stillInfo");
+                    stillInfo2.classList.add("stillInfo");
 
-        leftText.classList.add("leftText")
-        rightText.classList.add("rightText")
+                    breaker1.classList.add("stillInfoDetail");
+                    breaker2.classList.add("stillInfoDetail");
+                    breaker3.classList.add("stillInfoDetail");
 
-        stillInfo1.classList.add("stillInfo")
-        stillInfo2.classList.add("stillInfo")
+                    breaker4.classList.add("stillInfoDetail");
+                    breaker5.classList.add("stillInfoDetail");
+                    breaker6.classList.add("stillInfoDetail");
 
-        breaker1.classList.add("stillInfoDetail")
-        breaker2.classList.add("stillInfoDetail")
-        breaker3.classList.add("stillInfoDetail")
-    
-        breaker4.classList.add("stillInfoDetail")
-        breaker5.classList.add("stillInfoDetail")
-        breaker6.classList.add("stillInfoDetail")
+                    stillDetail.classList.add("stillDetail");
+                    img.classList.add("stillImage");
 
+                    title.classList.add("stillTitle");
 
+                    title.innerHTML = targetMovie;
+                    year.innerHTML = filmList.Year[i];
+                    director.innerHTML = "Underworks";
+                    dp.innerHTML = filmList.DP[i];
 
+                    titleRight.innerHTML = "Title";
+                    yearRight.innerHTML = "Year";
+                    directorRight.innerHTML = "Director";
+                    dpRight.innerHTML = "Cinematographer";
 
-        stillDetail.classList.add("stillDetail")
-        img.classList.add("stillImage")
+                    img.src = imagePath;
+                    img.loading = "lazy";
 
+                    img.addEventListener("click", function() {
+                        fullImgPreview(img.src);
+                    });
 
-        title.classList.add("stillTitle")
-            
+                    img.onerror = function() {
+                        if (container.parentNode) {
+                            container.parentNode.removeChild(container);
+                        }
+                    };
 
-        title.innerHTML = targetMovie
-        year.innerHTML = filmList.Year[i]
-        director.innerHTML = "Underworks"
-        dp.innerHTML = filmList.DP[i]
+                    container.appendChild(topBar);
+                    container.appendChild(stillDetail);
+                    container.appendChild(img);
+                    container.appendChild(bottomBar);
 
-        titleRight.innerHTML = "Title"
-        yearRight.innerHTML = "Year"
-        directorRight.innerHTML = "Director"
-        dpRight.innerHTML = "Cinematographer"
+                    topBar.appendChild(leftText);
+                    topBar.appendChild(rightText);
 
+                    leftText.appendChild(stillInfo1);
+                    stillInfo1.appendChild(title);
+                    stillInfo1.appendChild(breaker1);
+                    stillInfo1.appendChild(year);
+                    stillInfo1.appendChild(breaker2);
+                    stillInfo1.appendChild(director);
+                    stillInfo1.appendChild(breaker3);
+                    stillInfo1.appendChild(dp);
 
+                    rightText.appendChild(stillInfo2);
+                    stillInfo2.appendChild(titleRight);
+                    stillInfo2.appendChild(breaker4);
+                    stillInfo2.appendChild(yearRight);
+                    stillInfo2.appendChild(breaker5);
+                    stillInfo2.appendChild(directorRight);
+                    stillInfo2.appendChild(breaker6);
+                    stillInfo2.appendChild(dpRight);
 
-        img.src = imagePath
-
-        img.addEventListener("click", function(){fullImgPreview(img.src)})
-
-        img.onerror = function() {
-            if (container.parentNode) {
-                container.parentNode.removeChild(container);
+                    column1.appendChild(container);
+                }
             }
-        };
+        }
 
-        
+        index = end;
 
-        container.appendChild(topBar);
-        container.appendChild(stillDetail); 
-        container.appendChild(img);   
-        container.appendChild(bottomBar);  
-        
-        topBar.appendChild(leftText);        
-        topBar.appendChild(rightText);
-        
-        leftText.appendChild(stillInfo1);  
-        stillInfo1.appendChild(title);  
-        stillInfo1.appendChild(breaker1);  
-        stillInfo1.appendChild(year);  
-        stillInfo1.appendChild(breaker2);  
-        stillInfo1.appendChild(director);  
-        stillInfo1.appendChild(breaker3);  
-        stillInfo1.appendChild(dp);  
-
-        rightText.appendChild(stillInfo2);  
-        stillInfo2.appendChild(titleRight);  
-        stillInfo2.appendChild(breaker4);  
-        stillInfo2.appendChild(yearRight);  
-        stillInfo2.appendChild(breaker5);  
-        stillInfo2.appendChild(directorRight);  
-        stillInfo2.appendChild(breaker6);  
-        stillInfo2.appendChild(dpRight);  
-
-        column1.appendChild(container)
-
-        
+        if (index < filmList.Title.length) {
+            setTimeout(processBatch, delay);
         }
     }
 
-} 
-
-
+    processBatch();
 }
 
 
