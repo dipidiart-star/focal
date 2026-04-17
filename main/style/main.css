@@ -469,9 +469,9 @@ margin-bottom: 30px;
 
 
 .experiencesContainer1{
-    background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/10mm.jpg');
-    background-size: cover;
+        background-image: linear-gradient(to right, rgb(12, 12, 12) , transparent), url('../images/TheBustlingCity/10mm.jpg');
     background-position: center;
+    background-size: cover;
     background-color:var(--primary_color);
 }
 
